@@ -9,25 +9,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Get Date
-      id: get-date
-      run: |
-        echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-
-    - name: Cache Buildozer global directory
-      uses: actions/cache@v4
-      with:
-        path: ~/.buildozer
-        key: buildozer-global-${{ runner.os }}-${{ steps.get-date.outputs.date }}
-
     - name: Build with Buildozer
-      uses: ArtemGovorov/buildozer-action@v1
+      uses: s0v3r13gn/buildozer-action@v1.3.1
       id: buildozer
       with:
         command: buildozer android debug
         repository_root: .
 
-    - name: Upload APK Artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: package
